@@ -1,9 +1,9 @@
 import { client } from '../discord';
 
 export const getUserFromMention = (str: string) => {
-  if (str.startsWith('<@') && str.endsWith('>')) {
-    const start = str[2] === '!' ? 3 : 2;
-    const mention = str.slice(start, -1);
-    return client.users.cache.get(mention);
-  }
+  const match = str.match(/^<@!?(\d+)>$/);
+  if (!match) return null;
+
+  const id = match[1];
+  return client.users.cache.get(id);
 };
